@@ -1,3 +1,9 @@
+//
+// @author Alexander Nestorov <alexandernst@gmail.com>
+// 
+// @licensed under the WTFPL
+//
+
 #include <QApplication>
 #include "hb.h"
 
