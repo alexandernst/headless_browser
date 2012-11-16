@@ -1,3 +1,6 @@
+#Qt Creator user file
+hb.pro.user
+
 # Compiled Object files
 *.slo
 *.lo
