@@ -20,7 +20,7 @@ bool HB::shouldInterruptJavaScript(){
 void HB::javaScriptConsoleMessage(const QString &message, int lineNumber,const QString &sourceID){
     if (!sourceID.isEmpty()){
         QString error = sourceID + ":" + QString::number(lineNumber) + " " + message + "\n";
-        std::cout << error.toUtf8().data();
+        //std::cout << error.toUtf8().data();
     }
 }
 
