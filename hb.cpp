@@ -56,7 +56,7 @@ void HB::timeout(){
 void HB::genSnapshot(){
     QWebElement document = this->mainFrame()->documentElement();
 
-    //Comment to strip scripts
+    //Uncomment to strip scripts
     foreach(QWebElement data, document.findAll("script")){
         data.removeFromDocument();
     }
