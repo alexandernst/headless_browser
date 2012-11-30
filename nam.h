@@ -6,23 +6,20 @@
 #include <QtNetwork/QNetworkReply>
 
 class NAM : public QNetworkAccessManager {
+    Q_OBJECT
+
+    private:
+        int requests;
+
+    public:
+        NAM();
+        int pendingRequests();
+
     protected:
-        virtual QNetworkReply *createRequest(Operation op, const QNetworkRequest &req, QIODevice *outgoingData = 0){
-            if(
-                    req.url().path().endsWith("jpg") ||
-                    req.url().path().endsWith("png") ||
-                    req.url().path().endsWith("gif") ||
-                    req.url().path().endsWith("ttf") ||
-                    req.url().path().endsWith("svg") ||
-                    req.url().path().endsWith("eot") ||
-                    req.url().path().endsWith("jpeg") ||
-                    req.url().path().endsWith("woff")
-              ){
-                return QNetworkAccessManager::createRequest(QNetworkAccessManager::GetOperation, QNetworkRequest(QUrl()));
-            }else{
-                return QNetworkAccessManager::createRequest(op, req, outgoingData);
-            }
-        }
+        virtual QNetworkReply *createRequest(Operation op, const QNetworkRequest &req, QIODevice *outgoingData);
+
+    private slots:
+        void _finished(QNetworkReply *reply);
 };
 
 #endif // NAM_H

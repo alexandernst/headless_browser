@@ -18,6 +18,7 @@ class HB : public QWebPage {
         QWebPage *wp;
         QTimer *timer;
         QString dom_content;
+        void genSnapshot();
 
     public slots:
         void _loadFinished(bool ok);

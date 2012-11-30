@@ -9,7 +9,8 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp \
-    hb.cpp
+    hb.cpp \
+    nam.cpp
 
 HEADERS += \
     hb.h \
