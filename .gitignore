@@ -14,3 +14,7 @@ hb.pro.user
 *.lai
 *.la
 *.a
+
+release/
+debug/
+Makefile*
