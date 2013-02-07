@@ -5,16 +5,16 @@
 //
 
 #include <QtWidgets/QApplication>
-#include "headless_browser.h"
+#include "daemon.h"
 
 int main(int argc, char *argv[]){
     QApplication a(argc, argv);
 
-    HeadlessBrowser *wp = new HeadlessBrowser();
+    Daemon *webPage = new Daemon();
 
 #ifdef QT_NO_DEBUG
     QWebView *wv = new QWebView();
-    wv->setPage(wp);
+    wv->setPage(webPage);
     wv->show();
 
     QWebInspector *webInspector = new QWebInspector();
@@ -23,9 +23,7 @@ int main(int argc, char *argv[]){
     webInspector->show();
 #endif
 
-
-
-    wp->_load(QUrl(argv[1]));
+    webPage->_load(QUrl(argv[1]));
 
     return a.exec();
 }

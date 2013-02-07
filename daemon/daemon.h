@@ -2,6 +2,7 @@
 #define HB_H
 
 #include <iostream>
+#include <fstream>
 #include <QtWidgets/QApplication>
 
 #include <QtWebKit>
@@ -17,13 +18,13 @@ class HeadlessBrowser : public QWebPage {
     public:
         HeadlessBrowser();
         void _load(QUrl url);
+        Q_INVOKABLE void genSnapshot();
 
     private:
         NAM *nam;
         QWebPage *wp;
         QTimer *timer;
         QString dom_content;
-        void genSnapshot();
 
     public slots:
         void _loadFinished(bool ok);
@@ -31,6 +32,7 @@ class HeadlessBrowser : public QWebPage {
 
     private slots:
         void timeout();
+        void createJSMonitor();
 
     protected:
         void javaScriptConsoleMessage(const QString &message, int lineNumber,const QString &sourceID);
