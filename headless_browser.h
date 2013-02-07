@@ -7,6 +7,7 @@
 #include <QtWebKit>
 #include <QWebFrame>
 #include <QWebView>
+#include <QWebInspector>
 
 #include "nam.h"
 

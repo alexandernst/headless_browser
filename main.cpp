@@ -4,18 +4,26 @@
 // @licensed under the WTFPL
 //
 
-#include <QApplication>
-#include "hb.h"
+#include <QtWidgets/QApplication>
+#include "headless_browser.h"
 
 int main(int argc, char *argv[]){
     QApplication a(argc, argv);
 
-    HB *wp = new HB();
+    HeadlessBrowser *wp = new HeadlessBrowser();
 
-    //Uncomment to see the page in a QWebView
-    //QWebView *wv = new QWebView();
-    //wv->setPage(wp);
-    //wv->show();
+#ifdef QT_NO_DEBUG
+    QWebView *wv = new QWebView();
+    wv->setPage(wp);
+    wv->show();
+
+    QWebInspector *webInspector = new QWebInspector();
+    webInspector->setPage(wv->page());
+    webInspector->setGeometry(2000, 600, 1300, 400);
+    webInspector->show();
+#endif
+
+
 
     wp->_load(QUrl(argv[1]));
 

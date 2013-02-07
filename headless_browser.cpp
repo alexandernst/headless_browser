@@ -1,6 +1,7 @@
 #include "headless_browser.h"
 
-HeadlessBrowser::HeadlessBrowser(){
+HeadlessBrowser::HeadlessBrowser() : QWebPage(){
+    this->settings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
     this->settings()->setAttribute(QWebSettings::JavascriptEnabled, true);
     this->settings()->setAttribute(QWebSettings::LocalContentCanAccessRemoteUrls, true);
     dom_content = "";
@@ -20,9 +21,8 @@ bool HeadlessBrowser::shouldInterruptJavaScript(){
 
 void HeadlessBrowser::javaScriptConsoleMessage(const QString &message, int lineNumber,const QString &sourceID){
     if (!sourceID.isEmpty()){
-        QString error = sourceID + ":" + QString::number(lineNumber) + " " + message + "\n";
+        QString error = sourceID + ":" + QString::number(lineNumber) + " " + message + "\n\n";
         std::cout << error.toUtf8().data();
-        std::cout << "\n";
     }
 }
 
@@ -67,5 +67,5 @@ void HeadlessBrowser::genSnapshot(){
     //}
 
     std::cout << this->mainFrame()->toHtml().toUtf8().data();
-    QApplication::quit();
+    //QApplication::quit();
 }
