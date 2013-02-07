@@ -18,3 +18,4 @@ hb.pro.user
 release/
 debug/
 Makefile*
+headless_browser.pro.user
