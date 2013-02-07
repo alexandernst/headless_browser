@@ -1,12 +1,12 @@
-#include "hb.h"
+#include "headless_browser.h"
 
-HB::HB(){
+HeadlessBrowser::HeadlessBrowser(){
     this->settings()->setAttribute(QWebSettings::JavascriptEnabled, true);
     this->settings()->setAttribute(QWebSettings::LocalContentCanAccessRemoteUrls, true);
     dom_content = "";
 }
 
-void HB::_load(QUrl url){
+void HeadlessBrowser::_load(QUrl url){
     nam = new NAM();
     this->setNetworkAccessManager(nam);
     QObject::connect(this, SIGNAL(loadFinished(bool)), this, SLOT(_loadFinished(bool)));
@@ -14,19 +14,19 @@ void HB::_load(QUrl url){
 
 }
 
-bool HB::shouldInterruptJavaScript(){
+bool HeadlessBrowser::shouldInterruptJavaScript(){
     return false;
 }
 
-void HB::javaScriptConsoleMessage(const QString &message, int lineNumber,const QString &sourceID){
+void HeadlessBrowser::javaScriptConsoleMessage(const QString &message, int lineNumber,const QString &sourceID){
     if (!sourceID.isEmpty()){
         QString error = sourceID + ":" + QString::number(lineNumber) + " " + message + "\n";
-        //std::cout << error.toUtf8().data();
-        //std::cout << "\n";
+        std::cout << error.toUtf8().data();
+        std::cout << "\n";
     }
 }
 
-void HB::_loadFinished(bool ok){
+void HeadlessBrowser::_loadFinished(bool ok){
     QObject::disconnect(this, SIGNAL(loadFinished(bool)), this, SLOT(_loadFinished(bool)));
     timer = new QTimer();
 
@@ -39,7 +39,7 @@ void HB::_loadFinished(bool ok){
     timer->start();
 }
 
-void HB::timeout(){
+void HeadlessBrowser::timeout(){
     if(nam->pendingRequests() == 0 /*&& no pending javascript calls!*/){
 
         QString dom = this->mainFrame()->toHtml();
@@ -53,7 +53,7 @@ void HB::timeout(){
     }
 }
 
-void HB::genSnapshot(){
+void HeadlessBrowser::genSnapshot(){
     QWebElement document = this->mainFrame()->documentElement();
 
     //Uncomment to strip scripts

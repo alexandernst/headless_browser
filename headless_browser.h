@@ -2,15 +2,19 @@
 #define HB_H
 
 #include <iostream>
-#include <QApplication>
-#include <QtWebKit/QtWebKit>
+#include <QtWidgets/QApplication>
+
+#include <QtWebKit>
+#include <QWebFrame>
+#include <QWebView>
+
 #include "nam.h"
 
-class HB : public QWebPage {
+class HeadlessBrowser : public QWebPage {
     Q_OBJECT
 
     public:
-        HB();
+        HeadlessBrowser();
         void _load(QUrl url);
 
     private:
