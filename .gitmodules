@@ -1,0 +1,3 @@
+[submodule "socket-ipc"]
+	path = socket-ipc
+	url = git://github.com/alexandernst/Socket-IPC.git
