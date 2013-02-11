@@ -12,11 +12,11 @@
 
 #include "nam.h"
 
-class HeadlessBrowser : public QWebPage {
+class Daemon : public QWebPage {
     Q_OBJECT
 
     public:
-        HeadlessBrowser();
+        Daemon();
         void _load(QUrl url);
         Q_INVOKABLE void genSnapshot();
 

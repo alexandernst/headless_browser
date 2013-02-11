@@ -1,7 +1,7 @@
 #include "daemon.h"
 using namespace std;
 
-HeadlessBrowser::HeadlessBrowser() : QWebPage(){
+Daemon::Daemon() : QWebPage(){
     this->settings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
     this->settings()->setAttribute(QWebSettings::JavascriptEnabled, true);
     this->settings()->setAttribute(QWebSettings::LocalContentCanAccessRemoteUrls, true);
@@ -9,29 +9,29 @@ HeadlessBrowser::HeadlessBrowser() : QWebPage(){
     dom_content = "";
 }
 
-void HeadlessBrowser::createJSMonitor(){
+void Daemon::createJSMonitor(){
     mainFrame()->addToJavaScriptWindowObject("HeadlessBrowser", this);
 }
 
-void HeadlessBrowser::_load(QUrl url){
+void Daemon::_load(QUrl url){
     nam = new NAM();
     this->setNetworkAccessManager(nam);
     QObject::connect(this, SIGNAL(loadFinished(bool)), this, SLOT(_loadFinished(bool)));
     this->mainFrame()->load(url);
 }
 
-bool HeadlessBrowser::shouldInterruptJavaScript(){
+bool Daemon::shouldInterruptJavaScript(){
     return false;
 }
 
-void HeadlessBrowser::javaScriptConsoleMessage(const QString &message, int lineNumber,const QString &sourceID){
+void Daemon::javaScriptConsoleMessage(const QString &message, int lineNumber,const QString &sourceID){
     if (!sourceID.isEmpty()){
         QString error = sourceID + ":" + QString::number(lineNumber) + " " + message + "\n\n";
         std::cout << error.toUtf8().data();
     }
 }
 
-void HeadlessBrowser::_loadFinished(bool ok){
+void Daemon::_loadFinished(bool ok){
     QObject::disconnect(this, SIGNAL(loadFinished(bool)), this, SLOT(_loadFinished(bool)));
 
     QWebElement document = this->mainFrame()->documentElement();
@@ -51,7 +51,7 @@ void HeadlessBrowser::_loadFinished(bool ok){
     timer->start();
 }
 
-void HeadlessBrowser::timeout(){
+void Daemon::timeout(){
     /*if(nam->pendingRequests() == 0){ //&& no pending javascript calls!
 
         QString dom = this->mainFrame()->toHtml();
@@ -65,7 +65,7 @@ void HeadlessBrowser::timeout(){
     }*/
 }
 
-void HeadlessBrowser::genSnapshot(){
+void Daemon::genSnapshot(){
     QWebElement document = this->mainFrame()->documentElement();
 
     //Uncomment to strip scripts
