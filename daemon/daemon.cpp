@@ -72,9 +72,9 @@ void Daemon::genSnapshot(){
     }
 
     //Uncomment to strip styles (does styles matter for SEO?)
-    //foreach(QWebElement data, document.findAll("style")){
-    //    data.removeFromDocument();
-    //}
+    foreach(QWebElement data, document.findAll("style")){
+        data.removeFromDocument();
+    }
 
     emit newSnapshot(mainFrame()->toHtml());
 }
