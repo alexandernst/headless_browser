@@ -1,4 +1,4 @@
 TEMPLATE = subdirs
-SUBDIRS = daemon
+SUBDIRS = daemon client
           
 CONFIG += ordered
