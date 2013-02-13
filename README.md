@@ -24,3 +24,16 @@ using the pages you make it open, and that's ok with most pages,
 but there are some exceptions. And that's why I don't want to play
 the same game of trying to guess the encoding. Instead I'm leaving
 that part to you, dear developer :)
+
+
+###Install
+
+This project relies heavily on Socket-IPC. To get this project and
+the required submodules you'll need git. Make sure to run this:
+
+```
+git clone git://github.com/alexandernst/headless_browser.git headless_browser
+cd headless_browser
+git submodule init
+git submodule update
+```
