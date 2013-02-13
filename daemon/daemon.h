@@ -1,10 +1,7 @@
 #ifndef HB_H
 #define HB_H
 
-#include <iostream>
-#include <fstream>
 #include <QtWidgets/QApplication>
-
 #include <QtWebKit>
 #include <QWebFrame>
 #include <QWebView>
@@ -25,6 +22,9 @@ class Daemon : public QWebPage {
         QWebPage *wp;
         QTimer *timer;
         QString dom_content;
+
+    signals:
+        void newSnapshot(QString html_snapshot);
 
     public slots:
         void _loadFinished(bool ok);

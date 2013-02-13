@@ -1,5 +1,4 @@
 #include "daemon.h"
-using namespace std;
 
 Daemon::Daemon() : QWebPage(){
     this->settings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
@@ -27,18 +26,18 @@ bool Daemon::shouldInterruptJavaScript(){
 void Daemon::javaScriptConsoleMessage(const QString &message, int lineNumber,const QString &sourceID){
     if (!sourceID.isEmpty()){
         QString error = sourceID + ":" + QString::number(lineNumber) + " " + message + "\n\n";
-        std::cout << error.toUtf8().data();
+        qDebug() << error.toUtf8().data();
     }
 }
 
 void Daemon::_loadFinished(bool ok){
     QObject::disconnect(this, SIGNAL(loadFinished(bool)), this, SLOT(_loadFinished(bool)));
 
-    QWebElement document = this->mainFrame()->documentElement();
-    QWebElement body = document.findFirst("body");
-    qDebug() << body.attribute("onload");
-    body.setAttribute("onload", "HeadlessBrowser.genSnapshot();");
-    qDebug() << body.attribute("onload");
+    //QWebElement document = this->mainFrame()->documentElement();
+    //QWebElement body = document.findFirst("body");
+    //qDebug() << body.attribute("onload");
+    //body.setAttribute("onload", "HeadlessBrowser.genSnapshot();");
+    //qDebug() << body.attribute("onload");
 
     timer = new QTimer();
 
@@ -52,7 +51,7 @@ void Daemon::_loadFinished(bool ok){
 }
 
 void Daemon::timeout(){
-    /*if(nam->pendingRequests() == 0){ //&& no pending javascript calls!
+    if(nam->pendingRequests() == 0){ //&& no pending javascript calls!
 
         QString dom = this->mainFrame()->toHtml();
         if(dom_content == dom){
@@ -61,8 +60,7 @@ void Daemon::timeout(){
         }else{
             dom_content = dom;
         }
-
-    }*/
+    }
 }
 
 void Daemon::genSnapshot(){
@@ -78,11 +76,5 @@ void Daemon::genSnapshot(){
     //    data.removeFromDocument();
     //}
 
-    std::cout << this->mainFrame()->toHtml().toUtf8().data();
-
-    ofstream file;
-    file.open("snapshot.html");
-    file << this->mainFrame()->toHtml().toUtf8().data();
-    file.close();
-    //QApplication::quit();
+    emit newSnapshot(mainFrame()->toHtml());
 }
