@@ -71,7 +71,7 @@ void Daemon::genSnapshot(){
         data.removeFromDocument();
     }
 
-    //Uncomment to strip styles (does styles matter for SEO?)
+    //Uncomment to strip styles
     foreach(QWebElement data, document.findAll("style")){
         data.removeFromDocument();
     }
