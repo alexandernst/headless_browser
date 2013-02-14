@@ -50,6 +50,7 @@ function runExternal($cmd, &$code){
 
   return $output;
 }
+
 $result = runExternal("$headless_browser $url", $code);
 echo $result;
 

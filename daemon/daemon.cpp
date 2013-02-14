@@ -46,13 +46,6 @@ void Daemon::_loadFinished(bool ok){
     mainFrame()->evaluateJavaScript(QString(dprogress));
 
     mainFrame()->evaluateJavaScript("timer.callibrate(function(){ timer.collect(); collector.start(); });");
-
-    //QWebElement document = this->mainFrame()->documentElement();
-    //QWebElement body = document.findFirst("body");
-    //qDebug() << body.attribute("onload");
-    //body.setAttribute("onload", "HeadlessBrowser.genSnapshot();");
-    //qDebug() << body.attribute("onload");
-
 }
 
 void Daemon::genSnapshot(int result){
