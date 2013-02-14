@@ -1,6 +1,6 @@
 #include "nam.h"
 
-NAM::NAM(){
+NAM::NAM() : QNetworkAccessManager(){
     requests = 0;
     QObject::connect(this, SIGNAL(finished(QNetworkReply*)), this, SLOT(_finished(QNetworkReply*)));
 }
