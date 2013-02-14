@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>js/progress.js</file>
+        <file>js/timer.js</file>
+    </qresource>
+</RCC>
