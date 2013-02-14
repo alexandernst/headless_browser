@@ -1,5 +1,4 @@
 #include <iostream>
-#include <fstream>
 #include <QtCore/QCoreApplication>
 #include <../socket-ipc/client/client.h>
 
@@ -12,11 +11,6 @@ int main(int argc, char *argv[]){
 
     QObject::connect(client, &Client::newMessageFromServer, [](QString message){
         std::cout << message.toUtf8().data();
-
-        ofstream file;
-        file.open("snapshot.html");
-        file << message.toUtf8().data();
-        file.close();
     });
 
     client->sendMessage(argv[1]);
