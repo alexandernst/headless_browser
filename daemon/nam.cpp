@@ -1,12 +1,6 @@
 #include "nam.h"
 
-NAM::NAM() : QNetworkAccessManager(){
-    requests = 0;
-    QObject::connect(this, SIGNAL(finished(QNetworkReply*)), this, SLOT(_finished(QNetworkReply*)));
-}
-
 QNetworkReply* NAM::createRequest(Operation op, const QNetworkRequest &req, QIODevice *outgoingData = 0){
-    requests++;
     if( req.url().path().endsWith("jpg") ||
         req.url().path().endsWith("png") ||
         req.url().path().endsWith("gif") ||
@@ -20,12 +14,4 @@ QNetworkReply* NAM::createRequest(Operation op, const QNetworkRequest &req, QIOD
     }else{
         return QNetworkAccessManager::createRequest(op, req, outgoingData);
     }
-}
-
-int NAM::pendingRequests(){
-    return requests;
-}
-
-void NAM::_finished(QNetworkReply *reply){
-    requests--;
 }
