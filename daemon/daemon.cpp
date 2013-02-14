@@ -56,7 +56,7 @@ void Daemon::_loadFinished(bool ok){
 }
 
 void Daemon::genSnapshot(int result){
-    if(result <= 20 && results >= 10){
+    if(result <= 10 && results >= 10){
         QWebElement document = mainFrame()->documentElement();
 
         //Uncomment to strip scripts
@@ -71,7 +71,7 @@ void Daemon::genSnapshot(int result){
 
         emit newSnapshot(mainFrame()->toHtml());
         deleteLater();
-    }else if(result <= 20){
+    }else if(result <= 10){
         results++;
     }else{
         results = 0;
