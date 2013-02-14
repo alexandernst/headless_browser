@@ -12,7 +12,6 @@ int main(int argc, char *argv[]){
 
     QObject::connect(client, &Client::newMessageFromServer, [](QString message){
         std::cout << message.toUtf8().data();
-        qDebug() << "new message:" << message;
 
         ofstream file;
         file.open("snapshot.html");

@@ -1,9 +1,10 @@
 #include "daemon.h"
 
 Daemon::Daemon() : QWebPage(){
-    this->settings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
-    this->settings()->setAttribute(QWebSettings::JavascriptEnabled, true);
-    this->settings()->setAttribute(QWebSettings::LocalContentCanAccessRemoteUrls, true);
+    results = 0;
+    settings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
+    settings()->setAttribute(QWebSettings::JavascriptEnabled, true);
+    settings()->setAttribute(QWebSettings::LocalContentCanAccessRemoteUrls, true);
     QObject::connect(mainFrame(), SIGNAL(javaScriptWindowObjectCleared()), this, SLOT(createJSMonitor()));
 }
 
@@ -13,9 +14,9 @@ void Daemon::createJSMonitor(){
 
 void Daemon::_load(QUrl url){
     nam = new NAM();
-    this->setNetworkAccessManager(nam);
+    setNetworkAccessManager(nam);
     QObject::connect(this, SIGNAL(loadFinished(bool)), this, SLOT(_loadFinished(bool)));
-    this->mainFrame()->load(url);
+    mainFrame()->load(url);
 }
 
 bool Daemon::shouldInterruptJavaScript(){
@@ -23,14 +24,28 @@ bool Daemon::shouldInterruptJavaScript(){
 }
 
 void Daemon::javaScriptConsoleMessage(const QString &message, int lineNumber,const QString &sourceID){
-    if (!sourceID.isEmpty()){
-        QString error = sourceID + ":" + QString::number(lineNumber) + " " + message + "\n\n";
-        //qDebug() << error;
+    if(!sourceID.isEmpty()){
+        QString error = sourceID + ":" + QString::number(lineNumber) + " " + message;
+        qDebug() << error;
     }
 }
 
 void Daemon::_loadFinished(bool ok){
     QObject::disconnect(this, SIGNAL(loadFinished(bool)), this, SLOT(_loadFinished(bool)));
+
+    QFile ftimer(":/js/timer.js");
+    ftimer.open(QIODevice::ReadOnly | QIODevice::Text);
+    QByteArray dtimer = ftimer.readAll();
+    ftimer.close();
+    mainFrame()->evaluateJavaScript(QString(dtimer));
+
+    QFile fprogress(":/js/progress.js");
+    fprogress.open(QIODevice::ReadOnly | QIODevice::Text);
+    QByteArray dprogress = fprogress.readAll();
+    fprogress.close();
+    mainFrame()->evaluateJavaScript(QString(dprogress));
+
+    mainFrame()->evaluateJavaScript("timer.callibrate(function(){ timer.collect(); collector.start(); });");
 
     //QWebElement document = this->mainFrame()->documentElement();
     //QWebElement body = document.findFirst("body");
@@ -41,8 +56,8 @@ void Daemon::_loadFinished(bool ok){
 }
 
 void Daemon::genSnapshot(int result){
-    if(result == 0 && results >= 10){
-        QWebElement document = this->mainFrame()->documentElement();
+    if(result <= 20 && results >= 10){
+        QWebElement document = mainFrame()->documentElement();
 
         //Uncomment to strip scripts
         foreach(QWebElement data, document.findAll("script")){
@@ -55,7 +70,10 @@ void Daemon::genSnapshot(int result){
         }
 
         emit newSnapshot(mainFrame()->toHtml());
+        deleteLater();
+    }else if(result <= 20){
+        results++;
     }else{
-        result++;
+        results = 0;
     }
 }
