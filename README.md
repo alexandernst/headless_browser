@@ -3,7 +3,7 @@ Headless browser based on WebKit
 
 This tool will help you make your AJAX applications crawlable.
 
-Webpages based on JavaSript MVC libraries can't be positioned
+Webpages based on JavaScript MVC libraries can't be positioned
 by default because search engines can't run (yet) all the
 JavaSript code that your page needs to execute in order to *show*
 anything. That's why you need a headless browser that will fetch
