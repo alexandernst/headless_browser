@@ -15,13 +15,13 @@ class Daemon : public QWebPage {
     public:
         Daemon();
         void _load(QUrl url);
-        Q_INVOKABLE void genSnapshot();
+        Q_INVOKABLE void genSnapshot(int result);
 
     private:
+        int results;
         NAM *nam;
         QWebPage *wp;
         QTimer *timer;
-        QString dom_content;
 
     signals:
         void newSnapshot(QString html_snapshot);
@@ -31,7 +31,6 @@ class Daemon : public QWebPage {
         bool shouldInterruptJavaScript();
 
     private slots:
-        void timeout();
         void createJSMonitor();
 
     protected:
