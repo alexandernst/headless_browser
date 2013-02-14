@@ -11,6 +11,7 @@ int main(int argc, char *argv[]){
 
     QObject::connect(client, &Client::newMessageFromServer, [](QString message){
         std::cout << message.toUtf8().data();
+        QCoreApplication::quit();
     });
 
     client->sendMessage(argv[1]);
