@@ -49,7 +49,10 @@ void Daemon::_loadFinished(bool ok){
 }
 
 void Daemon::genSnapshot(int result){
-    if(result <= 10 && results >= 10){
+    int IDLE_HITS = 8;
+    int IDLE_NOISE = 10;
+
+    if(result <= IDLE_NOISE && results >= IDLE_HITS){
         QWebElement document = mainFrame()->documentElement();
 
         //Uncomment to strip scripts
@@ -64,7 +67,7 @@ void Daemon::genSnapshot(int result){
 
         emit newSnapshot(mainFrame()->toHtml());
         deleteLater();
-    }else if(result <= 10){
+    }else if(result <= IDLE_NOISE){
         results++;
     }else{
         results = 0;
