@@ -25,6 +25,8 @@ but there are some exceptions. And that's why I don't want to play
 the same game of trying to guess the encoding. Instead I'm leaving
 that part to you, dear developer :)
 
+TIP: https://developers.google.com/webmasters/ajax-crawling/docs/getting-started
+
 
 ###Install
 
