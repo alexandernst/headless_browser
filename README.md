@@ -28,7 +28,7 @@ that part to you, dear developer :)
 TIP: https://developers.google.com/webmasters/ajax-crawling/docs/getting-started
 
 
-###Install
+### Install
 
 This project relies heavily on Socket-IPC. To get this project and
 the required submodules you'll need git. Make sure to run this:
